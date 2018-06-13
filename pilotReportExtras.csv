@@ -1,0 +1,2 @@
+articleID,pilotNames,copilotNames,pilotTTC,copilotTTC,pilotStartDate,copilotStartDate,completionDate,Author_Assistance,finalOutcome,Insufficient_Information_Errors,locus_typo,locus_specification,locus_analysis,locus_data,locus_unidentified
+8-5-2015_PS,Kyle MacDonald,NA,150,NA,06/13/18,NA,NA,FALSE,Failure without author assistance,0,4,0,0,0,0
