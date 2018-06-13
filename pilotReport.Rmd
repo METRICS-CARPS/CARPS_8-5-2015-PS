@@ -1,0 +1,462 @@
+---
+title: "Article ID: 8-5-2015 PS"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+# Report Details
+
+```{r}
+articleID <- "8-5-2015_PS" # insert the article ID code here e.g., "10-3-2015_PS"
+reportType <- "pilot" # specify whether this is the 'pilot' report or 'final' report
+pilotNames <- "Kyle MacDonald" # insert the pilot's name here e.g., "Tom Hardwicke".  If there are multiple cpilots enter both names in a character string e.g., "Tom Hardwicke, Bob Dylan"
+copilotNames <- NA # # insert the co-pilot's name here e.g., "Michael Frank". If there are multiple co-pilots enter both names in a character string e.g., "Tom Hardwicke, Bob Dylan"
+pilotTTC <- 150 # insert the pilot's estimated time to complete (in minutes, fine to approximate) e.g., 120
+copilotTTC <- NA # insert the co-pilot's estimated time to complete (in minutes, fine to approximate) e.g., 120
+pilotStartDate <- "06/13/18" # insert the pilot's start date in US format e.g., as.Date("01/25/18", format = "%m/%d/%y")
+copilotStartDate <- NA # insert the co-pilot's start date in US format e.g., as.Date("01/25/18", format = "%m/%d/%y")
+completionDate <- NA # copilot insert the date of final report completion (after any necessary rounds of author assistance) in US format e.g., as.Date("01/25/18", format = "%m/%d/%y")
+```
+
+------
+
+#### Methods summary: 
+
+The goal of E3 was to compare how children's puppet choices were influenced by the type of prompt -- whether they wanted to "play with a puppet" or if they thought a pupper was "nicer." On each trial, children met two puppets -- one who was good at activating a toy (competent) and one who was not so good (incompetent). Then, children were asked to make a choice between the two puppets, and the type of question varied as a function of condition. In the play condition, children were asked, "Which one would you rather play with?" In the nicer condition, children were asked, "Which one is nicer?" In the nicer baseline condition, the introductory script was changed, but children were still asked, "Which one is nicer?" Each child only gave single choice response, which was coded after the task by a coder blind to condition.
+
+------
+
+#### Target outcomes: 
+
+For this article you should focus on the findings reported for experiment 3.
+
+Specifically, you should attempt to reproduce all descriptive and inferential analyses reported in the text below and associated tables/figures:
+
+> Results were coded from videotape by a coder blind to
+the condition and the child’s final choice. If, in the coder’s
+judgment, the puppets were not placed equidistant
+from a child, that child would have been excluded from
+analysis, but no children were excluded on these grounds.
+One subject was dropped because of experimenter error,
+2 were dropped because they left before the experiment
+concluded, and 5 were dropped because of parental
+interference. In addition, 10 children (2 in the play condition,
+5 in the nicer condition, and 3 in the nicer baseline
+control) were excluded from analysis because they failed
+to respond in the first 30 s. Thus, the final sample included
+16 subjects per condition.
+
+> Figure 2 shows the results from this experiment. In the
+play condition, 81.25% of children chose the competent
+agent (13 subjects; CI = [68.75%, 100%]). Thus, this condition
+replicated the findings of Experiment 2. By contrast,
+children in the nicer condition tended to choose the less
+competent agent. Of the 16 two-year-olds who made a
+choice, only 31.25% (CI = [6.25%, 50.00%]) chose the competent
+agent (5 subjects). That is, the subjects’ choice of
+the competent agent dropped from 81.25% to 31.25%
+when they were asked to judge which agent was nicer
+(CI = [21.05%, 81.67%]; p < .05, Fisher exact test). Finally,
+subjects’ performance in the nicer baseline condition suggests
+that this difference between the play and nicer conditions
+was not due to children’s baseline belief that less
+competent agents are nicer. Whereas only 68.75% of subjects
+(11 out of 16) chose the incompetent agent in the
+nicer condition, 31.25% of subjects (5 out of 16) chose the
+incompetent agent in the nicer baseline condition, a
+decrease of 37.5% (95% CI = [6.17%, 71.03%]; p < .075,
+Fisher exact test). This suggests that toddlers do not simply
+assume that incompetent agents are sympathetic; rather,
+they take into account the relative cost of agents’ actions.
+When both puppets refused to help, the toddlers
+might have inferred that the less competent agent was
+nicer because they exonerated the less competent agent
+from performing a costly action, because they judged the
+more competent agent harshly for refusing to perform a
+low-cost action, or both. Further research might shed
+light on the precise inferences that underlie children’s
+social evaluations in this paradigm. However, note that neither 
+agent was canonically nice: Both agents explicitly
+refused to engage in a helpful action. If our subjects
+understood “nice” only with respect to nice, helpful
+behaviors, rather than with respect to internal motivations,
+then they should have chosen a puppet at chance
+or refused to answer. Instead, these 2-year-olds were able
+to use differences in the agents’ costs to identify the nicer
+of two unhelpful agents.
+
+------
+
+[PILOT/COPILOT DO NOT CHANGE THE CODE IN THE CHUNK BELOW]  
+
+```{r global_options, include=FALSE}
+# sets up some formatting options for the R Markdown document
+knitr::opts_chunk$set(echo=TRUE, warning=FALSE, message=FALSE)
+```
+
+# Step 1: Load packages and prepare report object
+
+[PILOT/COPILOT Some useful packages are being loaded below. You can add any additional ones you might need too.]
+
+```{r}
+# load packages
+library(tidyverse) # for data munging
+library(knitr) # for kable table formating
+library(haven) # import and export 'SPSS', 'Stata' and 'SAS' Files
+library(readxl) # import excel files
+library(CARPSreports) # custom report functions
+```
+
+[PILOT/COPILOT DO NOT MAKE CHANGES TO THE CODE CHUNK BELOW]
+
+```{r}
+# Prepare report object. This will be updated automatically by the reproCheck function each time values are compared
+reportObject <- data.frame(dummyRow = TRUE, reportedValue = NA, obtainedValue = NA, valueType = NA, percentageError = NA, comparisonOutcome = NA, eyeballCheck = NA)
+```
+
+# Step 2: Load data
+
+```{r}
+d <- read_csv("data/JaraEttinger_Tenenbaum_Schulz_Results.csv")
+```
+
+# Step 3: Tidy data
+
+Subset to just Experiment 3, which is the target of the check. 
+
+```{r}
+d_e3 <- d %>% filter(Experiment == "Experiment 3") 
+```
+
+How many participants in the dataset? From the Participants section:
+
+> Sixty-six subjects (mean age = 2.48 years, SD = 114 days, range = 2.00–2.98 years) were recruited and tested at an urban children’s museum. Thirteen additional 2-year-olds were recruited but not included in the study because they declined to participate in a warm-up task, in which they were asked to choose between two stuffed animals.
+
+Additional information about the analysis sample from the results section:
+
+> One subject was dropped because of experimenter error,
+2 were dropped because they left before the experiment
+concluded, and 5 were dropped because of parental
+interference. In addition, 10 children (2 in the play condition,
+5 in the nicer condition, and 3 in the nicer baseline
+control) were excluded from analysis because they failed
+to respond in the first 30 s. Thus, the final sample included
+16 subjects per condition.
+
+```{r}
+d_e3 %>% count(Status) %>% kable()
+```
+
+Filter out based on exclusionary criteria and check if we get 16 participants in each condition. 
+Note that there was some additional filtering information in the AnalyzeData.R script. 
+
+> 10 children did not make a choice: 3 in the control condition, five in the nicer condition, and two in the play condition.
+
+```{r}
+d_e3 %>% 
+  filter(Status == "Data", Choice != "None") %>% 
+  count(Condition) %>% 
+  kable()
+```
+
+We can reproduce the reported number of participants in each condition. So we use this filtered dataset for 
+subsquent analyses. 
+
+```{r}
+d_e3_analysis <- d_e3 %>% filter(Status == "Data", Choice != "None")
+```
+
+# Step 4: Run analysis
+
+## Pre-processing
+
+No pre-processing needed. 
+
+## Descriptive statistics
+
+#### Compute choice proportions
+
+> In the play condition, 81.25% of children chose the competent
+agent (13 subjects; CI = [68.75%, 100%]). By contrast,
+children in the nicer condition tended to choose the less
+competent agent. Of the 16 two-year-olds who made a
+choice, only 31.25% (CI = [6.25%, 50.00%]) chose the competent
+agent (5 subjects).
+
+```{r}
+n_subs <- 16
+
+choice_results_n <- d_e3_analysis %>% 
+  count(Condition, Choice) %>% 
+  mutate(n_total = n_subs,
+         prop = (n / n_total) * 100) 
+
+choice_results_n %>% kable()
+```
+
+#### Check the descriptive choice results
+
+Note that we use the `valueType = 'n'` to report the number of children 
+who made a given choice. 
+
+```{r}
+# play condition
+comp_choice_play <- choice_results_n$n[5]
+reportObject <- reproCheck(reportedValue = '13', obtainedValue = comp_choice_play, valueType = 'n')
+
+# nice condition
+comp_choice_nice <- choice_results_n$n[3]
+reportObject <- reproCheck(reportedValue = '5', obtainedValue = comp_choice_nice, valueType = 'n')
+
+# control condition 
+comp_choice_control <- choice_results_n$n[1]
+reportObject <- reproCheck(reportedValue = '11', obtainedValue = comp_choice_control, valueType = 'n')
+```
+
+They also reported the following descriptives in a comparison of choosing the incompetent agent in nicer condition and the nicer baseline (control).
+
+> Whereas only 68.75% of sub- jects (11 out of 16) chose the incompetent agent in the nicer condition, 31.25% of subjects (5 out of 16) chose the incompetent agent in the nicer baseline condition...
+
+```{r}
+# nice condition choosing incompetent
+incomp_nice <- choice_results_n$n[4]
+reportObject <- reproCheck(reportedValue = '11', obtainedValue = incomp_nice, valueType = 'n')
+
+# control condition choosing incompetent
+incomp_control <- choice_results_n$n[2]
+reportObject <- reproCheck(reportedValue = '5', obtainedValue = incomp_control, valueType = 'n')
+```
+
+#### Bootstrap 95% CIs on choice behavior
+
+```{r}
+library(tidyboot)
+nboot <- 10000
+
+choice_results_table <- d_e3_analysis %>% 
+  mutate(numeric_choice = ifelse(Choice == "Competent", 1, 0),
+         logical_choice = as.logical(numeric_choice)) %>% 
+  group_by(Condition) %>%
+  tidyboot_mean(logical_choice, nboot = nboot) 
+
+choice_results_table %>% 
+  mutate(empirical_perc = empirical_stat * 100,
+         ci_lower_perc = ci_lower * 100,
+         ci_upper_perc = ci_upper * 100) %>% 
+  print.data.frame() %>% 
+  kable()
+```
+
+We aren't getting enough precision to compare values, so we compute CIs using the `boot` package (how the authors originally computed CIs).
+
+```{r}
+library(boot)
+ProportionFunction<-function(data,indices){return(sum(data[indices])/length(data[indices]))}
+nboot <- 500000
+
+# Experiment 3 Play condition
+exp3p<-c(rep(1,13),rep(0,3))
+resultsexp3p <- boot(data=exp3p, statistic=ProportionFunction, R=nboot)
+ci_play <- boot.ci(resultsexp3p,type="basic") # 62.50%-100%
+ci_play_lower <- ci_play$basic[4] * 100
+ci_play_upper <- ci_play$basic[5] * 100
+```
+
+```{r}
+# Experiment 3 Nicer condition
+exp3n <- c(rep(1,5),rep(0,11))
+resultsexp3n <- boot(data=exp3n, statistic=ProportionFunction, R=nboot)
+ci_nice <- boot.ci(resultsexp3n,type="basic") # 6.25%-50.00%
+ci_nice_lower <- ci_nice$basic[4] * 100
+ci_nice_upper <- ci_nice$basic[5] * 100
+```
+
+```{r}
+# Experiment 3 control condition
+exp3c <- c(rep(1,11),rep(0,5))
+resultsexp3c <- boot(data=exp3c, statistic=ProportionFunction, R=nboot)
+ci_control <- boot.ci(resultsexp3c,type="basic") # 50.00%-93.75%
+ci_control_lower <- ci_control$basic[4] * 100
+ci_control_upper <- ci_control$basic[5] * 100
+```
+
+#### Check the 95% CIs
+
+```{r}
+# play condition
+reportObject <- reproCheck(reportedValue = '68.75', obtainedValue = ci_play_lower, valueType = 'ci')
+reportObject <- reproCheck(reportedValue = '100', obtainedValue = ci_play_upper, valueType = 'ci')
+
+# nice condition
+reportObject <- reproCheck(reportedValue = '6.25', obtainedValue = ci_nice_lower, valueType = 'ci')
+reportObject <- reproCheck(reportedValue = '50', obtainedValue = ci_nice_upper, valueType = 'ci')
+```
+
+KM note: the authors did not report the CI on the nicer baseline condition.
+
+## Inferential statistics
+
+The authors reported two key inferential analyses, both using Fisher exact tests.
+
+> That is, the subjects’ choice of the competent agent dropped from 81.25% to 31.25% when they were asked to judge which agent was nicer (CI = [21.05%, 81.67%]; p < .05, Fisher exact test)
+
+```{r}
+# Compare Play and Nicer conditions in Experiment 3 
+
+# Fisher's exact test
+Exp3ChoiceSwitch <-
+  matrix(c(13, 5, 3, 11),
+         nrow = 2,
+         dimnames =
+           list(c("Play", "Nicer"),
+                c("Competent", "Incompetent")))
+Exp3ChoiceSwitch
+
+play_nice_fisher <- fisher.test(Exp3ChoiceSwitch)
+
+# Bootstrap the difference
+Exp3NP<-data.frame(
+  choice=c(rep(1,13),rep(0,3),rep(1,5),rep(0,11)),
+  condition=c(rep("Play",16),rep("Nicer",16))
+)
+
+IncreasePerc<-function(x,id){
+  dat<-x[id,]
+  d1<-filter(dat,condition=="Play")
+  d2<-filter(dat,condition=="Nicer")
+  res<-(sum(d1$choice)/nrow(d1))-((sum(d2$choice)/nrow(d2)))
+  return(res)
+}
+NicerDiff<-boot(Exp3NP,statistic=IncreasePerc, R=500000)
+play_nice_diff <- boot.ci(NicerDiff,type="basic") # 21.05%-81.67%
+```
+
+#### Check the values for the fisher's exact test for the Play vs. Nice condition difference.
+
+```{r}
+play_nice_diff_ci_low <- play_nice_diff$basic[4] %>% round(4) * 100
+play_nice_diff_ci_upper <- play_nice_diff$basic[5] %>% round(4) * 100
+play_nice_diff_ci_p <- play_nice_fisher$p.value
+
+# ci-upper
+reportObject <- reproCheck(reportedValue = '21.05', obtainedValue = play_nice_diff_ci_low, valueType = 'ci')
+# ci-lower
+reportObject <- reproCheck(reportedValue = '81.67', obtainedValue = play_nice_diff_ci_upper, valueType = 'ci')
+# p-value
+reportObject <- reproCheck(reportedValue = 'p < .05', obtainedValue = play_nice_diff_ci_p, valueType = 'p', 
+                           eyeballCheck = TRUE)
+```
+
+> Whereas only 68.75% of sub- jects (11 out of 16) chose the incompetent agent in the nicer condition, 31.25% of subjects (5 out of 16) chose the incompetent agent in the nicer baseline condition, a decrease of 37.5% (95% CI = [6.17%, 71.03%]; p < .075, Fisher exact test).
+
+```{r}
+# Compare Nicer and Control conditions in Experiment 3 
+
+# Fisher's exact test
+Exp3NiceBias <-
+  matrix(c(5, 11, 11, 5),
+         nrow = 2,
+         dimnames =
+           list(c("Nicer", "Control"),
+                c("Competent", "Incompetent")))
+Exp3NiceBias
+
+nice_control_fisher <- fisher.test(Exp3NiceBias)
+
+# Bootstrap the difference
+Exp3NB<-data.frame(
+  choice=c(rep(1,11),rep(0,5),rep(1,5),rep(0,11)),
+  condition=c(rep("Baseline",16),rep("Nicer",16))
+)
+
+IncreasePerc<-function(x,id){
+  dat<-x[id,]
+  d1<-filter(dat,condition=="Baseline")
+  d2<-filter(dat,condition=="Nicer")
+  res<-(sum(d1$choice)/nrow(d1))-((sum(d2$choice)/nrow(d2)))
+  return(res)
+}
+set.seed(59283) # so we can replicate the exact numbers
+NicerDiff <- boot(Exp3NB,statistic=IncreasePerc, R=500000)
+nice_control_diff <- boot.ci(NicerDiff,type="basic") # 6.17%-71.03%
+```
+
+#### Check the values for the fisher's exact test for the Control vs. Nice condition difference.
+
+```{r}
+nice_control_diff_ci_low <- nice_control_diff$basic[4] %>% round(4) * 100
+nice_control_diff_ci_upper <- nice_control_diff$basic[5] %>% round(4) * 100
+nice_control_diff_ci_p <- nice_control_fisher$p.value
+
+# ci-upper
+reportObject <- reproCheck(reportedValue = '6.17', obtainedValue = nice_control_diff_ci_low, valueType = 'ci')
+# ci-lower
+reportObject <- reproCheck(reportedValue = '71.0', obtainedValue = nice_control_diff_ci_upper, valueType = 'ci')
+# p-value
+reportObject <- reproCheck(reportedValue = '.075', obtainedValue = nice_control_diff_ci_p, valueType = 'p')
+```
+
+KM note: they interpret a p-value of p < .075 as a significant effect, which is a little strange. Morever, the p-value via Fisher exact test is p = .0756, which actualy doesn't match their threshold of reporting. Discussed this issue with Tom, and we decided it was strange but should be a minor numerical error. To compute this, I entered the reported value as their threshold of .075.
+
+# Step 5: Conclusion
+
+This reproducibiity check was a success. The data, codebook, and R code provided by the original authors were quite helpful. I was able to reproduce the descriptive results and most the inferential statistics. I did find four minor errors, which I think were likely caused by typographical errors in the paper writing process. 
+
+```{r}
+Author_Assistance = FALSE # was author assistance provided? (if so, enter TRUE)
+
+Insufficient_Information_Errors <- 0 # how many discrete insufficient information issues did you encounter?
+
+# Assess the causal locus (discrete reproducibility issues) of any reproducibility errors. Note that there doesn't necessarily have to be a one-to-one correspondance between discrete reproducibility issues and reproducibility errors. For example, it could be that the original article neglects to mention that a Greenhouse-Geisser correct was applied to ANOVA outcomes. This might result in multiple reproducibility errors, but there is a single causal locus (discrete reproducibility issue).
+
+locus_typo <- 0 # how many discrete issues did you encounter that related to typographical errors?
+locus_specification <- 0 # how many discrete issues did you encounter that related to incomplete, incorrect, or unclear specification of the original analyses?
+locus_analysis <- 0 # how many discrete issues did you encounter that related to errors in the authors' original analyses?
+locus_data <- 0 # how many discrete issues did you encounter that related to errors in the data files shared by the authors?
+locus_unidentified <- 0 # how many discrete issues were there for which you could not identify the cause
+
+Affects_Conclusion <- 0 # Do any reproducibility issues encounter appear to affect the conclusions made in the original article? TRUE, FALSE, or NA. This is a subjective judgement, but you should taking into account multiple factors, such as the presence/absence of decision errors, the number of target outcomes that could not be reproduced, the type of outcomes that could or could not be reproduced, the difference in magnitude of effect sizes, and the predictions of the specific hypothesis under scrutiny.
+```
+
+```{r}
+reportObject <- reportObject %>%
+  filter(dummyRow == FALSE) %>% # remove the dummy row
+  select(-dummyRow) %>% # remove dummy row designation
+  mutate(articleID = articleID) %>% # add variables to report 
+  select(articleID, everything()) # make articleID first column
+
+# decide on final outcome
+if(any(reportObject$comparisonOutcome != "MATCH") | Insufficient_Information_Errors > 0){
+  finalOutcome <- "Failure without author assistance"
+  if(Author_Assistance == T){
+    finalOutcome <- "Failure despite author assistance"
+  }
+}else{
+  finalOutcome <- "Success without author assistance"
+  if(Author_Assistance == T){
+    finalOutcome <- "Success with author assistance"
+  }
+}
+
+# collate report extra details
+reportExtras <- data.frame(articleID, pilotNames, copilotNames, pilotTTC, copilotTTC, pilotStartDate, copilotStartDate, completionDate, Author_Assistance, finalOutcome, Insufficient_Information_Errors, locus_typo, locus_specification, locus_analysis, locus_data, locus_unidentified)
+
+# save report objects
+if(reportType == "pilot"){
+  write_csv(reportObject, "pilotReportDetailed.csv")
+  write_csv(reportExtras, "pilotReportExtras.csv")
+}
+
+if(reportType == "final"){
+  write_csv(reportObject, "finalReportDetailed.csv")
+  write_csv(reportExtras, "finalReportExtras.csv")
+}
+```
+
+# Session information
+
+```{r session_info, include=TRUE, echo=TRUE, results='markup'}
+devtools::session_info()
+```
