@@ -1,0 +1,2 @@
+articleID,pilotNames,copilotNames,pilotTTC,copilotTTC,pilotStartDate,copilotStartDate,completionDate,Author_Assistance,finalOutcome,Insufficient_Information_Errors,locus_typo,locus_specification,locus_analysis,locus_data,locus_unidentified,locus_typo_resolved,locus_specification_resolved,locus_analysis_resolved,locus_data_resolved,locus_unidentified_resolved
+8-5-2015_PS,Kyle MacDonald,Tom Hardwicke,150,30,2018-06-13,2018-09-19,2018-09-19,FALSE,Success without author assistance,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
