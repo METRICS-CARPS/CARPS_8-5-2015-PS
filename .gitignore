@@ -38,3 +38,4 @@ vignettes/*.pdf
 tests/testthat/packrat/
 packrat-scenario*/
 packrat/lib*/
+*.dcf
